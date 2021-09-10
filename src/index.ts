@@ -1,12 +1,18 @@
 import "./index.scss";
 import Canvas from "./render/canvas";
-import { tick, generateNiohs, drawEntities, addFood } from "./behavior";
+import {
+  tick,
+  generateNiohs,
+  drawEntities,
+  addFood,
+  setTarget,
+} from "./behavior";
 import Vector from "./models/vector";
 
 let canvas = new Canvas("canvas");
 let lastRender = 0;
 
-generateNiohs(1);
+generateNiohs(200);
 
 function update(delta: number) {
   tick(delta, canvas);
@@ -38,4 +44,11 @@ window.addEventListener("resize", () => {
 
 canvas.canvas.addEventListener("click", (ev: MouseEvent) => {
   addFood(new Vector(ev.clientX, ev.clientY));
+});
+
+canvas.canvas.addEventListener("contextmenu", (ev: MouseEvent) => {
+  ev.preventDefault();
+  ev.stopPropagation();
+
+  setTarget(new Vector(ev.clientX, ev.clientY));
 });

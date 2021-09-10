@@ -2,7 +2,7 @@ import Food from "./models/food";
 import Nioh from "./models/nioh";
 import Vector from "./models/vector";
 import Canvas from "./render/canvas";
-import { drawDot } from "./render/render-helpers";
+import { drawCone, drawDot } from "./render/render-helpers";
 
 const niohs: Set<Nioh> = new Set();
 const food: Set<Food> = new Set();
@@ -10,13 +10,20 @@ const food: Set<Food> = new Set();
 //#region Niohs
 export function generateNiohs(size: number) {
   for (let i = 0; i < size; i++) {
-    niohs.add(new Nioh(Math.random() * 100, Math.random() * 100));
+    niohs.add(new Nioh(Math.random() * 2000, Math.random() * 2000));
   }
 }
 
 function drawNiohs(context: CanvasRenderingContext2D) {
   niohs.forEach((nioh) => {
     drawDot(nioh.position, 5, "white", context);
+    drawCone(nioh.position, nioh.visionRange, nioh.rotation, context, "white");
+  });
+}
+
+export function setTarget(v: Vector) {
+  niohs.forEach((nioh) => {
+    nioh.setTarget(v);
   });
 }
 
@@ -29,7 +36,7 @@ export function addFood(v: Vector) {
 
 function drawFood(context: CanvasRenderingContext2D) {
   food.forEach((f) => {
-    drawDot(f.positon, 2, "yellow", context);
+    drawDot(f.position, 2, "yellow", context);
   });
 }
 

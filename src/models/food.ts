@@ -1,5 +1,5 @@
 import Vector from "./vector";
 
 export default class Food {
-  constructor(public positon: Vector) {}
+  constructor(public position: Vector) {}
 }
